@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="3" author="Uzi">
+        <createTable tableName="drinks">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="drink_pkey"/>
+            </column>
+            <column name="name" type="varchar2(255)"/>
+            <column name="alcohol" type="bigint"/>
+            <column name="comment" type="varchar2(255)"/>
+            <column name="photo_url" type="varchar2(255)"/>
+         </createTable>
+    </changeSet>
+
+    <changeSet id="4" author="Uzi">
+        <createTable tableName="ingredients">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="ingredient_pkey"/>
+            </column>
+            <column name="name" type="varchar2(255)"/>
+            <column name="value_ingredient" type="bigint"/>
+            <column name="unit" type="varchar2(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="5" author="Uzi">
+        <createTable tableName="recipe">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="recipe_pkey"/>
+            </column>
+            <column name="name" type="varchar2(255)"/>
+            <column name="body_recipe" type="varchar2(255)"/>
+            <column name="num_order" type="int"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="6" author="Uzi">
+        <createTable tableName="tags">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="tag_pkey"/>
+            </column>
+            <column name="name" type="varchar2(255)"/>
+            <column name="drink_id" type="bigint"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="tags" baseColumnNames="drink_id"
+                                 constraintName="tag_drink_id"
+                                 referencedTableName="drinks" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="7" author="Uzi">
+        <createTable tableName="drink_ingredient">
+            <column name="drink_id" type="bigint"/>
+            <column name="ingredient_id" type="bigint"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="drink_ingredient" baseColumnNames="drink_id"
+                                 constraintName="drink_ingredient_drink_id"
+                                 referencedTableName="drinks" referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="drink_ingredient" baseColumnNames="ingredient_id"
+                                 constraintName="drink_ingredient_ingredient_id"
+                                 referencedTableName="ingredients" referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="8" author="Uzi">
+        <createTable tableName="drink_recipe">
+            <column name="drink_id" type="bigint"/>
+            <column name="recipe_id" type="bigint"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="drink_recipe" baseColumnNames="drink_id"
+                                 constraintName="drink_recipe_drink_id"
+                                 referencedTableName="drinks" referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="drink_recipe" baseColumnNames="recipe_id"
+                                 constraintName="drink_recipe_recipe_id"
+                                 referencedTableName="recipe" referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

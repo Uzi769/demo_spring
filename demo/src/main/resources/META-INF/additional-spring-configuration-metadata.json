@@ -1,0 +1,18 @@
+{
+  "properties": [
+    {
+      "name": "driver-class-name",
+      "type": "java.lang.String",
+      "description": "Description for driver-class-name."
+    },
+    {
+      "name": "logLevel",
+      "type": "java.lang.String",
+      "description": "Description for logLevel."
+    },
+    {
+      "name": "show_sql",
+      "type": "java.lang.String",
+      "description": "Description for show_sql."
+    }
+  ] }
