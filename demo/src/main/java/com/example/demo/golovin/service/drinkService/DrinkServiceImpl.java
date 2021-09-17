@@ -74,10 +74,5 @@ public class DrinkServiceImpl implements DrinkService {
         if(drinkInput.getName() != null) drink.setName(drinkInput.getName());
         if(drinkInput.getAlcohol() != null) drink.setAlcohol(drinkInput.getAlcohol());
     }
-    @PreDestroy
-    @Override
-    public void dropBase(){
-        String sql = "drop table drinks";
-        Query query = (Query) manager.createNativeQuery(sql);
-    }
+
 }

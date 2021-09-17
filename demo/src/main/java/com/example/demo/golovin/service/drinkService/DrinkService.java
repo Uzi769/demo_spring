@@ -19,5 +19,4 @@ public interface DrinkService {
 
     DrinkOutput update(DrinkInput drinkInput, Long id);
 
-    void dropBase();
 }

@@ -3,7 +3,6 @@ package com.example.demo.golovin.controllers;
 import com.example.demo.golovin.dao.model.tag.TagInput;
 import com.example.demo.golovin.dao.model.tag.TagOutput;
 import com.example.demo.golovin.service.tagsService.TagService;
-import com.example.demo.golovin.service.tagsService.TagServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

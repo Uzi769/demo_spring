@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import javax.annotation.PreDestroy;
 
 public interface RecipeRepository extends JpaRepository<RecipeEntity, Long> {
-    @PreDestroy
-    @Query(value = "drop table recipe",
-            nativeQuery = true)
-    void dropTable();
+
 }
+

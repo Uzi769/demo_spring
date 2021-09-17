@@ -10,9 +10,5 @@ public interface TagRepository extends JpaRepository<TagEntity, Long> {
 
     TagEntity findByName(String name);
 
-    @PreDestroy
-    @Query(value = "drop table tags",
-            nativeQuery = true)
-    void dropTable();
 
 }

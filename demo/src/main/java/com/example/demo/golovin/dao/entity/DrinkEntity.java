@@ -1,5 +1,7 @@
 package com.example.demo.golovin.dao.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -36,8 +38,5 @@ public class DrinkEntity {
     @ManyToMany(mappedBy = "drinks",fetch = FetchType.LAZY)
     private List<RecipeEntity> recipes;
 
-    public void dropBase(){
-
-    }
 
 }

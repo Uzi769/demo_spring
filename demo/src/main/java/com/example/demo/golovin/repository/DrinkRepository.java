@@ -7,9 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.PreDestroy;
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
+
 import java.util.Optional;
 
 @Repository
