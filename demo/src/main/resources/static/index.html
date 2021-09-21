@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #f1f2f5;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #a4a0a0;
+        }
+    </style>
+</head>
+<body>
+
+<h2>HTML Table</h2>
+
+<table id="drinkList">
+
+
+</table>
+<form action="#">
+    <input id="drink_name" placeholder="Drink name">
+    <input id="drink_alcohol" placeholder="Drink alcohol">
+    <button onclick="createDrink()">Create drink</button>
+</form>
+
+    <input id="findByName" placeholder="Name">
+    <button onclick="searchByName()">Search by Name</button>
+
+<script>
+    function searchByName() {
+        var name = document.getElementById("findByName").value;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var drink = JSON.parse(this.responseText);
+                var html = '<tr>\n' +
+                    '        <th>Drink id</th>\n' +
+                    '        <th>Drink name</th>\n' +
+                    '        <th>Drink alcohol</th>\n' +
+                    '    </tr>';
+                html = html + '<tr><td>' + drink.id + '</td>\n' +
+                    '        <td>' + drink.name + '</td>\n' +
+                    '        <td>' + drink.alcohol + '</td>\n' +
+                    '        <td><button onclick="deleteDrink(' + drink.id + ')">Delete</button></td></tr>';
+                document.getElementById("drinksList").innerHTML = html;
+            }
+        };
+
+        xhttp.open("GET", "http://localhost:8080/api/drink?name="+name, true);
+        xhttp.send();
+    }
+
+
+    function deleteDrink(drinkId) {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("DELETE", "http://localhost:8080/api/" + drinkId, true);
+        xmlhttp.send();
+
+    }
+
+    function createDrink() {
+        var drinkName = document.getElementById("drink_name").value;
+        var drinkAlcohol = document.getElementById("drink_alcohol").value;
+
+        var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+        xmlhttp.open("POST", "http://localhost:8080/api");
+        xmlhttp.setRequestHeader("Content-Type", "application/json");
+        xmlhttp.send(JSON.stringify({name: drinkName, alcohol: drinkAlcohol}));
+
+        loadDrinks();
+
+    }
+
+    function loadDrinks() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var drinks = JSON.parse(this.responseText);
+                var html = '<tr>\n' +
+                    '        <th>Drink id</th>\n' +
+                    '        <th>Drink name</th>\n' +
+                    '        <th>Drink alcohol</th>\n' +
+                    '        <th>Delete</th>\n' +
+                    '       </tr>';
+                for (var i = 0; i < drinks.length; i++) {
+                    var drink = drinks[i];
+                    console.log(drink);
+                    html = html + '<tr><td>' + drink.id + '</td>\n' +
+                        '    <td>' + drink.name + '</td>\n' +
+                        '    <td>' + drink.alcohol + '</td>' +
+                        '    <td><button onclick="deleteDrink('+drink.id+')">Delete</button></td></tr>';
+                }
+                document.getElementById("drinkList").innerHTML = html;
+            }
+        };
+        xhttp.open("GET", "http://localhost:8080/api", true);
+        xhttp.send();
+    }
+    loadDrinks();
+</script>
+
+</body>
+</html>
+

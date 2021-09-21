@@ -4,6 +4,7 @@ import com.example.demo.golovin.dao.entity.RecipeEntity;
 import com.example.demo.golovin.dao.mapper.RecipeMapper;
 import com.example.demo.golovin.dao.model.recipe.RecipeInput;
 import com.example.demo.golovin.dao.model.recipe.RecipeOutput;
+import com.example.demo.golovin.exception.ThereIsNoSuchException;
 import com.example.demo.golovin.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,10 +40,13 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public RecipeOutput update(RecipeInput input, Long id) {
-        RecipeEntity entity = repository.findById(id).get();
-        updateEntity(entity, input);
-        repository.save(entity);
-        return mapper.toRecipeOutput(entity);
+        if(repository.findById(id).isPresent()){
+            RecipeEntity entity = repository.findById(id).get();
+            updateEntity(entity, input);
+            repository.save(entity);
+            return mapper.toRecipeOutput(entity);
+        }
+        else throw new ThereIsNoSuchException();
 
     }
 

@@ -13,5 +13,4 @@ public class DrinkInput {
   private String comment;
   private String photoUrl;
 
-
 }

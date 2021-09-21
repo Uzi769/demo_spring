@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class DrinkOutput {
+    private Long id;
     private String name;
     private Long alcohol;
 }

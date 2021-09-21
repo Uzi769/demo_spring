@@ -19,4 +19,6 @@ public interface DrinkService {
 
     DrinkOutput update(DrinkInput drinkInput, Long id);
 
+    List<DrinkOutput> delete(Long id);
+//    void delete(Long id);
 }

@@ -3,7 +3,6 @@ package com.example.demo.golovin.controllers;
 
 import com.example.demo.golovin.dao.model.ingredient.IngredientInput;
 import com.example.demo.golovin.dao.model.ingredient.IngredientOutput;
-import com.example.demo.golovin.service.ingredientService.IngredientService;
 import com.example.demo.golovin.service.ingredientService.IngredientServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +23,7 @@ public class IngredientController {
 
     @GetMapping()
     public List<IngredientOutput> getAll(){
-        return service.getAll();
+        return service.findAll();
     }
 
     @PatchMapping("/{id}")

@@ -8,13 +8,12 @@ import com.example.demo.golovin.repository.IngredientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class IngredientServiceImpl implements IngredientService{
+public class IngredientServiceImpl implements IngredientService {
 
 
     private final IngredientRepository ingredientRepo;
@@ -26,10 +25,11 @@ public class IngredientServiceImpl implements IngredientService{
     public IngredientOutput create(IngredientInput input) {
         IngredientEntity entity = mapper.toIngredientEntity(input);
         ingredientRepo.save(entity);
-        return  mapper.toIngredientOutput(entity);
+        return mapper.toIngredientOutput(entity);
     }
+
     @Override
-    public List<IngredientOutput> getAll(){
+    public List<IngredientOutput> findAll() {
         return ingredientRepo.findAll().stream().map(mapper::toIngredientOutput).collect(Collectors.toList());
     }
 
@@ -41,14 +41,14 @@ public class IngredientServiceImpl implements IngredientService{
         return mapper.toIngredientOutput(entity);
     }
 
-    private void updateIng(IngredientInput input, IngredientEntity entity){
-        if(!(input.getName() == null || entity.getName().equals(input.getName()))){
+    private void updateIng(IngredientInput input, IngredientEntity entity) {
+        if (!(input.getName() == null || entity.getName().equals(input.getName()))) {
             entity.setName(input.getName());
         }
-        if(!(input.getUnit() == null || entity.getUnit().equals(input.getUnit()))){
+        if (!(input.getUnit() == null || entity.getUnit().equals(input.getUnit()))) {
             entity.setUnit(input.getUnit());
         }
-        if((input.getValue() != 0 || entity.getValue() != input.getValue())) {
+        if ((input.getValue() != 0 || entity.getValue() != input.getValue())) {
             entity.setValue(input.getValue());
         }
     }

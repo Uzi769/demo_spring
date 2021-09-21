@@ -9,7 +9,7 @@ import java.util.List;
 public interface IngredientService{
     IngredientOutput create(IngredientInput input);
     IngredientOutput update(IngredientInput input, Long id);
-    List<IngredientOutput> getAll();
+    List<IngredientOutput> findAll();
     List<IngredientOutput> delete(Long id);
 
 }

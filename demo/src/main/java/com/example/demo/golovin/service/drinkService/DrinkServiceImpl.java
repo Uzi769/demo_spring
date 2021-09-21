@@ -4,16 +4,13 @@ import com.example.demo.golovin.dao.entity.DrinkEntity;
 import com.example.demo.golovin.dao.mapper.DrinkMapper;
 import com.example.demo.golovin.dao.model.drink.DrinkInput;
 import com.example.demo.golovin.dao.model.drink.DrinkOutput;
-import com.example.demo.golovin.exception.NoEntityException;
+import com.example.demo.golovin.exception.ExistsException;
+import com.example.demo.golovin.exception.ShorNameException;
+import com.example.demo.golovin.exception.ThereIsNoSuchException;
 import com.example.demo.golovin.repository.DrinkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PreDestroy;
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,22 +24,22 @@ public class DrinkServiceImpl implements DrinkService {
     @Autowired
     private DrinkMapper mapper;
 
-    @Autowired
-    private EntityManager manager;
-
     @Override
     public DrinkOutput findByName(String name) {
         DrinkEntity drink = drinkRepository.findByName(name);
+        if (drink == null) {
+            throw new ThereIsNoSuchException();
+        }
         return mapper.toDrinkOutput(drink);
     }
 
     @Override
     public DrinkOutput findById(Long id) {
-        if (id == null) {
-            throw new NoEntityException("id не может быть равен null");
+        if (drinkRepository.findById(id).isEmpty()) {
+            throw new ExistsException();
         }
         DrinkEntity drink = drinkRepository.findById(id).orElseThrow(() ->
-                new NoEntityException("Сущности с таким id - не существует!"));
+                new ExistsException());
         return mapper.toDrinkOutput(drink);
     }
 
@@ -55,6 +52,10 @@ public class DrinkServiceImpl implements DrinkService {
 
     @Override
     public DrinkOutput create(DrinkInput drinkInput) {
+        if (drinkInput.getName().length() > 30 || drinkInput.getName().length() < 2) {
+            throw new ExistsException();
+        }
+
         DrinkEntity drink = mapper.toDrinkEntity(drinkInput);
         drinkRepository.save(drink);
 
@@ -63,16 +64,37 @@ public class DrinkServiceImpl implements DrinkService {
 
     @Override
     public DrinkOutput update(DrinkInput drinkInput, Long id) {
-        DrinkEntity drink = drinkRepository.findById(id).orElseThrow(()->
-                new NoEntityException("Сущности с таким id - не существует!"));
+        DrinkEntity drink = drinkRepository.findById(id).orElseThrow(ExistsException::new);
         updateDrink(drink, drinkInput);
         drinkRepository.save(drink);
         return mapper.toDrinkOutput(drink);
     }
 
-    private void updateDrink(DrinkEntity drink, DrinkInput drinkInput){
-        if(drinkInput.getName() != null) drink.setName(drinkInput.getName());
-        if(drinkInput.getAlcohol() != null) drink.setAlcohol(drinkInput.getAlcohol());
+    @Override
+    public List<DrinkOutput> delete(Long id) {
+        if (drinkRepository.findById(id).isEmpty()) {
+            throw new ThereIsNoSuchException();
+        }
+        drinkRepository.deleteById(id);
+        return drinkRepository.findAll().stream().map(mapper::toDrinkOutput).collect(Collectors.toList());
     }
+
+//    @Override
+//    public void delete(Long id) {
+//        if (drinkRepository.findById(id).isEmpty()) {
+//            throw new ThereIsNoSuchException();
+//        }
+//        drinkRepository.deleteById(id);
+//    }
+
+    private void updateDrink(DrinkEntity drink, DrinkInput drinkInput) {
+        if (drinkInput.getName() != null) {
+            drink.setName(drinkInput.getName());
+        } else throw new ShorNameException();
+        if (drinkInput.getAlcohol() != null) {
+            drink.setAlcohol(drinkInput.getAlcohol());
+        } else throw new ShorNameException();
+    }
+
 
 }
