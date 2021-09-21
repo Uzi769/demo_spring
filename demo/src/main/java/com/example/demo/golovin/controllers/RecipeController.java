@@ -16,22 +16,22 @@ public class RecipeController {
     private RecipeService service;
 
     @PostMapping()
-    public RecipeOutput create (@RequestBody RecipeInput input){
+    public RecipeOutput create(@RequestBody RecipeInput input) {
         return service.create(input);
     }
 
     @GetMapping()
-    public List<RecipeOutput> getAll(){
+    public List<RecipeOutput> getAll() {
         return service.getAll();
     }
 
     @PutMapping("/{id}")
-    public RecipeOutput update(@RequestBody RecipeInput input, @PathVariable Long id){
+    public RecipeOutput update(@RequestBody RecipeInput input, @PathVariable Long id) {
         return service.update(input, id);
     }
 
     @DeleteMapping("/{id}")
-    public List<RecipeOutput> delete(@PathVariable Long id){
+    public List<RecipeOutput> delete(@PathVariable Long id) {
         return service.delete(id);
     }
 }

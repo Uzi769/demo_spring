@@ -21,17 +21,17 @@ public class TagController {
     }
 
     @PostMapping
-    public TagOutput create(@RequestBody TagInput tagInput){
+    public TagOutput create(@RequestBody TagInput tagInput) {
         return service.create(tagInput);
     }
 
     @PutMapping("/{id}")
-    public TagOutput update(@RequestBody TagInput tagInput, @PathVariable Long id){
+    public TagOutput update(@RequestBody TagInput tagInput, @PathVariable Long id) {
         return service.update(tagInput, id);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long id){
+    public void delete(@PathVariable("id") Long id) {
         service.delete(id);
     }
 }

@@ -4,7 +4,6 @@ import com.example.demo.golovin.dao.model.drink.DrinkInput;
 import com.example.demo.golovin.dao.model.drink.DrinkOutput;
 import com.example.demo.golovin.service.drinkService.DrinkService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public class DrinkController {
 
     @GetMapping
     public List<DrinkOutput> getAll() {
-       return drinkService.findAll();
+        return drinkService.findAll();
     }
 
     @GetMapping("/drink")
@@ -51,7 +50,7 @@ public class DrinkController {
 
     @DeleteMapping("/{id}")
 
-    public List<DrinkOutput> deleteById(@PathVariable("id") Long id){
+    public List<DrinkOutput> deleteById(@PathVariable("id") Long id) {
         return drinkService.delete(id);
     }
 }

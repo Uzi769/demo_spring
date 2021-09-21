@@ -17,22 +17,22 @@ public class IngredientController {
     private IngredientServiceImpl service;
 
     @PostMapping()
-    public IngredientOutput create(@RequestBody IngredientInput input){
+    public IngredientOutput create(@RequestBody IngredientInput input) {
         return service.create(input);
     }
 
     @GetMapping()
-    public List<IngredientOutput> getAll(){
+    public List<IngredientOutput> getAll() {
         return service.findAll();
     }
 
     @PatchMapping("/{id}")
-    public IngredientOutput update(@RequestBody IngredientInput input, @PathVariable("id") Long id){
+    public IngredientOutput update(@RequestBody IngredientInput input, @PathVariable("id") Long id) {
         return service.update(input, id);
     }
 
     @DeleteMapping("/{id}")
-    public List<IngredientOutput> delete(@PathVariable("id") Long id){
+    public List<IngredientOutput> delete(@PathVariable("id") Long id) {
         return service.delete(id);
     }
 
