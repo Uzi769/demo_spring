@@ -8,9 +8,10 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class DrinkInput {
-  private String name;
-  private Long alcohol;
-  private String comment;
-  private String photoUrl;
+    private String name;
+    private Long alcohol;
+    private String comment;
+    private String photoUrl;
+    private String testGit;
 
 }
