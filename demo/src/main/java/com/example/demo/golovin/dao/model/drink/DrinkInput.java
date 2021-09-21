@@ -13,5 +13,6 @@ public class DrinkInput {
     private String comment;
     private String photoUrl;
     private String testGit;
+    private String testGit2;
 
 }
