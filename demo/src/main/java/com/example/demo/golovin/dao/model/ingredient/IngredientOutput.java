@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class IngredientOutput {
+    private Long id;
     private String name;
     private Long value;
     private String unit;

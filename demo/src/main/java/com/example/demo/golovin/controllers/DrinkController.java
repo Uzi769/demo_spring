@@ -42,11 +42,6 @@ public class DrinkController {
         return drinkService.update(drinkInput, id);
     }
 
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deleteById(@PathVariable("id") Long id){
-//        drinkService.delete(id);
-//        return ResponseEntity.ok().build();
-//    }
 
     @DeleteMapping("/{id}")
 

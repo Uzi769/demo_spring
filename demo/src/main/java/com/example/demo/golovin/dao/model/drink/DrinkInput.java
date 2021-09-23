@@ -2,6 +2,8 @@ package com.example.demo.golovin.dao.model.drink;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -12,7 +14,7 @@ public class DrinkInput {
     private Long alcohol;
     private String comment;
     private String photoUrl;
-    private String testGit;
-    private String testGit2;
+    private List<Long> idIngredients;
+
 
 }

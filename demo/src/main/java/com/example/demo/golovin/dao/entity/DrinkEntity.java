@@ -1,15 +1,11 @@
 package com.example.demo.golovin.dao.entity;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
@@ -17,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "drinks")
+@Builder
 public class DrinkEntity {
 
     @Id
@@ -38,7 +35,7 @@ public class DrinkEntity {
 
     private String comment;
 
-    @ManyToMany(mappedBy = "drinks", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "drinks", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<IngredientEntity> ingredients;
 
     private String photo_url;

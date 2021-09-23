@@ -4,10 +4,12 @@ import com.example.demo.golovin.dao.entity.IngredientEntity;
 import com.example.demo.golovin.dao.mapper.IngredientMapper;
 import com.example.demo.golovin.dao.model.ingredient.IngredientInput;
 import com.example.demo.golovin.dao.model.ingredient.IngredientOutput;
+import com.example.demo.golovin.exception.ThereIsNoSuchException;
 import com.example.demo.golovin.repository.IngredientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +30,14 @@ public class IngredientServiceImpl implements IngredientService {
         return mapper.toIngredientOutput(entity);
     }
 
+    @Override
+    public IngredientOutput findById(Long id) {
+        if(ingredientRepo.findById(id).isEmpty()){
+            throw new ThereIsNoSuchException();
+        }
+        return mapper.toIngredientOutput(ingredientRepo.findById(id).get());
+    }
+    @Transactional
     @Override
     public List<IngredientOutput> findAll() {
         return ingredientRepo.findAll().stream().map(mapper::toIngredientOutput).collect(Collectors.toList());
