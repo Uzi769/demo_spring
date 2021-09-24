@@ -35,7 +35,10 @@ public class DrinkEntity {
 
     private String comment;
 
-    @ManyToMany(mappedBy = "drinks", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "drink_ingredient",
+            joinColumns = {@JoinColumn(name="drink_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name="ingredient_id", referencedColumnName = "id")})
     private List<IngredientEntity> ingredients;
 
     private String photo_url;
