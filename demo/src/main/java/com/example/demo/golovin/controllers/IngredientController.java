@@ -21,6 +21,11 @@ public class IngredientController {
         return service.create(input);
     }
 
+    @GetMapping("/{id}")
+    public IngredientOutput getById(@PathVariable("id") Long id) {
+        return service.findById(id);
+    }
+
     @GetMapping()
     public List<IngredientOutput> getAll() {
         return service.findAll();

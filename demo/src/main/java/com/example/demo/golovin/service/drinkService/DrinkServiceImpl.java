@@ -8,9 +8,12 @@ import com.example.demo.golovin.exception.ExistsException;
 import com.example.demo.golovin.exception.ShorNameException;
 import com.example.demo.golovin.exception.ThereIsNoSuchException;
 import com.example.demo.golovin.repository.DrinkRepository;
+import com.example.demo.golovin.repository.IngredientRepository;
+import com.example.demo.golovin.service.ingredientService.IngredientServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +23,14 @@ public class DrinkServiceImpl implements DrinkService {
     @Autowired
     //либо @RequiredArgsConstructor и сделать поля final
     private DrinkRepository drinkRepository;
+
+    @Autowired
+    private IngredientServiceImpl ingredientService;
+
+    @Autowired
+    //либо @RequiredArgsConstructor и сделать поля final
+    private IngredientRepository ingredientRepository;
+
 
     @Autowired
     private DrinkMapper mapper;
@@ -36,11 +47,9 @@ public class DrinkServiceImpl implements DrinkService {
     @Override
     public DrinkOutput findById(Long id) {
         if (drinkRepository.findById(id).isEmpty()) {
-            throw new ExistsException();
+            throw new ThereIsNoSuchException();
         }
-        DrinkEntity drink = drinkRepository.findById(id).orElseThrow(() ->
-                new ExistsException());
-        return mapper.toDrinkOutput(drink);
+        return mapper.toDrinkOutput(drinkRepository.getById(id));
     }
 
     @Override
@@ -51,6 +60,7 @@ public class DrinkServiceImpl implements DrinkService {
 
 
     @Override
+    @Transactional
     public DrinkOutput create(DrinkInput drinkInput) {
         if (drinkInput.getName().length() > 30 || drinkInput.getName().length() < 2) {
             throw new ExistsException();

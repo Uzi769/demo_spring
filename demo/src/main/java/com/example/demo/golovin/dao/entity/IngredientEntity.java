@@ -21,10 +21,7 @@ public class IngredientEntity {
     @Column(name = "value_ingredient")
     private Long value;
     private String unit;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "drink_ingredient",
-            joinColumns = {@JoinColumn(name="drink_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name="ingredient_id", referencedColumnName = "id")})
+    @ManyToMany(mappedBy = "ingredients", fetch = FetchType.LAZY)
     private List<DrinkEntity> drinks;
 
 

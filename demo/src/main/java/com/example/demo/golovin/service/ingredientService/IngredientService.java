@@ -10,6 +10,7 @@ public interface IngredientService{
     IngredientOutput create(IngredientInput input);
     IngredientOutput update(IngredientInput input, Long id);
     List<IngredientOutput> findAll();
+    IngredientOutput findById(Long id);
     List<IngredientOutput> delete(Long id);
 
 }
